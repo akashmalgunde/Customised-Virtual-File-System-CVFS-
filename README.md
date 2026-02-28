@@ -1,135 +1,267 @@
 📂 Customised Virtual File System (CVFS)
-📌 Overview
+📌 Project Overview
 
-Customised Virtual File System (CVFS) is a simulation of a Linux-like file system implemented in C.
-This project demonstrates the internal working of file operations such as create, open, read, write, lseek, close, delete, etc., entirely in memory.
+The Customised Virtual File System (CVFS) is a UNIX-like file system simulation developed using the C programming language. This project mimics the internal working of a traditional operating system file system entirely in memory (RAM), without interacting with actual disk storage.
 
-The system mimics core file system components like Superblock, Inode, File Table, and UFDT.
+The main objective of this project is to understand and implement low-level file system mechanisms such as inode management, file descriptor handling, file tables, and system call behavior.
 
-🚀 Features
+This project demonstrates how operating systems like Linux manage files internally.
 
-Create file
+🎯 Objectives
 
-Open file
+To understand the internal structure of a file system.
 
-Read file
+To simulate system calls like open, close, read, write, etc.
 
-Write file
+To implement inode-based file management.
 
-Close file
+To demonstrate file descriptor and file table handling.
 
-Delete file
+To understand permission checking and reference counting.
 
-Truncate file
+🛠️ Technologies Used
 
-Change file offset (lseek)
+Programming Language: C
 
-Display file statistics (stat / fstat)
+Platform: Linux / Windows (GCC Compiler)
 
-List files
+Concepts Used:
 
-🛠 Technologies Used
-
-C Programming Language
-
-Data Structures (Linked List, Arrays)
-
-Pointers
+Data Structures (Linked List)
 
 Dynamic Memory Allocation
 
-Operating System Concepts
+Pointer Management
 
-🖥 Platform
+File Descriptor Table
 
-Windows / Linux
+Inode Structure
+
+System Call Simulation
+
+💻 System Requirements
+Hardware Requirements
+
+Minimum 4GB RAM
+
+1 GHz Processor
+
+Software Requirements
 
 GCC Compiler
 
-🧠 Concepts Implemented
+Linux Terminal / Command Prompt
 
-Superblock management
+🏗️ Architecture Components
 
-Inode structure
+The project internally maintains the following components:
 
-User File Descriptor Table (UFDT)
+1️⃣ Superblock
 
-File Table
+Stores total number of inodes.
 
-Reference Count & Link Count
+Tracks free inodes available in the system.
 
-File offset handling
+2️⃣ Inode Structure
 
-Memory management
+Each file is represented using an inode containing:
 
-📊 Architecture
+File name
 
-CVFS consists of:
+File size
 
-Superblock – Maintains metadata of file system
+Actual file size
 
-DILB (Linked List of Inodes) – Stores file metadata
+File type
 
-UFDT – Stores opened file descriptors
+Permission
 
-File Table – Maintains runtime file information
+Link count
 
-⚙ How To Run
-Compile:
+Reference count
+
+Buffer pointer
+
+Next inode pointer
+
+3️⃣ UFDT (User File Descriptor Table)
+
+Maintains file descriptors returned after opening files.
+
+Each entry points to the File Table.
+
+4️⃣ File Table
+
+Stores mode (read/write)
+
+Current offset
+
+Reference count
+
+Pointer to inode
+
+⚙️ Features Implemented
+
+The system supports the following commands:
+
+Command	Description
+create	Create new file
+open	Open existing file
+read	Read file content
+write	Write data to file
+close	Close opened file
+closeall	Close all opened files
+ls	List all files
+stat	Display file information
+fstat	Display file info using descriptor
+truncate	Remove file data
+rm	Delete file
+🔄 Flow of the Project
+
+Initialize Superblock.
+
+Create a linked list of inodes.
+
+Wait for user commands.
+
+Validate input command.
+
+Perform operation:
+
+Allocate inode (if needed)
+
+Update file table
+
+Update offsets
+
+Check permissions
+
+Return output to user.
+
+🧠 Concepts Demonstrated
+
+Inode management
+
+Linked list implementation
+
+Dynamic memory allocation
+
+File descriptor handling
+
+Offset management
+
+Permission validation
+
+Reference counting
+
+UNIX-like system call simulation
+
+🔍 Internal Working of Important System Calls
+open()
+
+Checks file existence.
+
+Verifies permission.
+
+Allocates file table entry.
+
+Returns file descriptor.
+
+read()
+
+Validates file descriptor.
+
+Checks read permission.
+
+Reads data from buffer using offset.
+
+Updates read offset.
+
+write()
+
+Validates descriptor.
+
+Checks write permission.
+
+Writes data to file buffer.
+
+Updates write offset.
+
+lseek()
+
+Changes file offset based on:
+
+Start
+
+Current position
+
+End
+
+close()
+
+Decreases reference count.
+
+Frees file table entry if count becomes zero.
+
+📁 How to Compile and Run
 gcc cvfs.c -o cvfs
-Run:
 ./cvfs
-📖 Supported Commands
-creat <filename> <permission>
-open <filename> <mode>
-read <filename> <bytes>
-write <filename>
-close <filename>
-closeall
-ls
-stat <filename>
-fstat <fd>
-truncate <filename>
-rm <filename>
-lseek <filename> <offset> <startpoint>
-exit
+📊 Sample Output
+CVFS Started Successfully
+cvfs > create Demo 3
+File created successfully
 
-Permission/Mode:
+cvfs > write Demo
+Enter data:
+Hello World
 
-1 → Read
+cvfs > read Demo 11
+Hello World
 
-2 → Write
+cvfs > ls
+Demo
+🚀 Use of This Project
 
-3 → Read & Write
+Academic understanding of Operating System concepts.
 
-📌 Example
-creat demo 3
-write demo
-read demo 10
-stat demo
-rm demo
-🎯 Learning Outcome
+Practical implementation of file system design.
 
-This project helped in understanding:
+Interview preparation for system programming roles.
 
-Internal working of file systems
+Strengthening C programming and data structure knowledge.
 
-OS file management
+⚠️ Limitations
 
-System call simulation
+Works only in memory (data is lost after program termination).
 
-Data structure implementation in real applications
+Fixed maximum number of inodes.
+
+No real disk storage interaction.
 
 🔮 Future Improvements
 
-Add directory support
+Add disk persistence.
 
-Add execute permission
+Add directory support.
 
-Add multi-user support
+Implement multi-user access.
 
-Store data permanently instead of RAM
+Add encryption for file security.
+
+📚 Learning Outcomes
+
+After completing this project, you will understand:
+
+How Linux file systems work internally.
+
+How system calls are implemented.
+
+How file descriptors are managed.
+
+How operating systems handle file security.
 
 👨‍💻 Author
 
 Akash Malgunde
+B.E / Information Technology
+Project: Customised Virtual File System (CVFS)
